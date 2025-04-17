@@ -58,3 +58,29 @@ jobs:
               echo "</details>"
             } >> $GITHUB_STEP_SUMMARY
           fi                  
+
+  cd:
+    runs-on: ubuntu-latest 
+    needs: [ci]
+    steps: 
+      - name: Obtendo o código do projeto
+        uses: actions/checkout@v4
+    
+        # Configurar a minha conta da AWS
+      - name: Configuração das AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+
+      - name: Configuração do Kubectl
+        run: aws eks update-kubeconfig --name pipeline-elite
+      
+      - name: Deploy no Kubernetes
+        uses: Azure/k8s-deploy@v5
+        with:
+           manifests: |
+              ./k8s/deployment.yaml
+           images: 'fabricioveronez/missao-pipeline:v${{ github.run_number }}'
+    
