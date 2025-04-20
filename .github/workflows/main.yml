@@ -34,14 +34,14 @@ jobs:
           push: true
           file: ./src/Review-Filmes.Web/Dockerfile
           tags: | 
-            fabricioveronez/missao-pipeline:latest
-            fabricioveronez/missao-pipeline:v${{ github.run_number }}
+            raco21/missao-pipeline:latest
+            raco21/missao-pipeline:v${{ github.run_number }}
 
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@0.30.0
         with:
           scan-type: 'image'
-          image-ref: 'fabricioveronez/missao-pipeline:v${{ github.run_number }}'
+          image-ref: 'raco21/missao-pipeline:v${{ github.run_number }}'
           format: table
           output: 'trivy-docker-results.txt'
           severity: 'UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL'
@@ -82,5 +82,5 @@ jobs:
         with:
            manifests: |
               ./k8s/deployment.yaml
-           images: 'fabricioveronez/missao-pipeline:v${{ github.run_number }}'
+           images: 'raco21/missao-pipeline:v${{ github.run_number }}'
     

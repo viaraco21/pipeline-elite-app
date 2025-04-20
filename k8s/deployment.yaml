@@ -5,7 +5,7 @@ kind: Deployment
 metadata:
   name: reviewfilmes
 spec: 
-  replicas: 10
+  replicas: 3
   selector:
     matchLabels: 
       app: reviewfilmes
@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: reviewfilmes
-          image: fabricioveronez/missao-pipeline
+          image: raco21/missao-pipeline
           env:
           - name: ASPNETCORE_HTTP_PORTS
             value: "8080"
