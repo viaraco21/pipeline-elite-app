@@ -1,3 +1,4 @@
+# Inicio automatico depois do git push
 name: Pipeline CI/CD
 on:
   push:
